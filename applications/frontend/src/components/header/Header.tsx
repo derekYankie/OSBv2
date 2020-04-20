@@ -8,6 +8,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { MainMenu } from '../menu/MainMenu';
+import { UserInfo } from '../../types/user';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export const Header = (props: any) => {
   const classes = useStyles();
 
-  const user = props.user;
+  const user: UserInfo = props.user;
 
   const handleUserLogin = () => props.onUserLogin({
       id: 1,

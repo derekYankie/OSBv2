@@ -13,7 +13,7 @@ export type CallOSBApiAction = {
 };
 
 // callapi middle actions
-const fetchWorkspacesAction = (): CallApiAction => {
+const loadWorkspacesAction = (): CallApiAction => {
   return ({
     type: 'api/fetchWorkspaces',
     payload: {
@@ -27,7 +27,7 @@ const fetchWorkspacesAction = (): CallApiAction => {
   })
 }
 
-const fetchNWBFilesAction = (): CallApiAction => {
+const loadNWBFilesAction = (): CallApiAction => {
   return ({
     type: 'api/fetchNWBFiles',
     payload: {
@@ -41,7 +41,7 @@ const fetchNWBFilesAction = (): CallApiAction => {
   })
 }
 
-const fetchModelsAction = (): CallApiAction => {
+const loadModelsAction = (): CallApiAction => {
   return ({
     type: 'api/fetchModels',
     payload: {
@@ -69,13 +69,13 @@ function createOSBAPIMiddleware() {
     let apiAction = null;
     switch (action.type) {
       case fetchWorkspacesActionType:
-        apiAction = fetchWorkspacesAction()
+        apiAction = loadWorkspacesAction()
         break
       case fetchNWBFilesActionType:
-        apiAction = fetchNWBFilesAction()
+        apiAction = loadNWBFilesAction()
         break
       case fetchModelsActionType:
-        apiAction = fetchModelsAction()
+        apiAction = loadModelsAction()
         break
       default:
       //
