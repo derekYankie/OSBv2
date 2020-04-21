@@ -19,8 +19,8 @@ conda activate osb
 To install CloudHarness:
 
 ```
-git clone https://github.com/MetaCell/cloud-harness.git harness
-cd harness
+git clone https://github.com/MetaCell/cloud-harness.git
+cd cloud-harness
 pip install -r requirements.txt
 ```
 
@@ -37,8 +37,22 @@ harness-codefresh .
 To manually create the helm chart to use on any Kubernetes deployment, run:
 
 ```
-harness-generate .
+harness-deployment .
+```
+(Run `harness-deployment --help` to know more about parameters)
+
+
+## Code generation facilities
+To refresh your REST applications code with openapi-generate, run
+
+```
+harness-generate
 ```
 
+To create a new application, run 
+
+```
+harness-application [APP_NAME]
+```
 
 
