@@ -1,0 +1,5 @@
+enabled: true
+harvest: true
+name: sentry
+port: 9000
+subdomain: sentry

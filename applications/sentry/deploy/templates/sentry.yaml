@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sentry-postgres
+  labels:
+    app: {{ .Values.apps.sentry.name }}
+{{ include "deploy_utils.labels" $ | indent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apps.sentry.name }}
+  labels:
+    app: {{ .Values.apps.sentry.name }}
+{{ include "deploy_utils.labels" $ | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.apps.sentry.name | quote }}
+{{ include "deploy_utils.labels" $ | indent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apps.sentry.name }}
+{{ include "deploy_utils.labels" $ | indent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.apps.sentry.name | default "server" | quote }}
+        image: {{ .Values.apps.sentry.image }}
+        imagePullPolicy: "IfNotPresent"
+        ports:
+          - containerPort: {{ .Values.apps.sentry.port }}
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1500m"
+        volumeMounts:
+        - name: sentry-postgres
+          mountPath: /var/lib/postgresql/9.6/main
+      volumes:
+      - name: sentry-postgres
+        persistentVolumeClaim:
+          claimName: sentry-postgres
