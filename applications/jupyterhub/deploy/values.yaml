@@ -62,7 +62,10 @@ hub:
     spawner: >-
       c.Spawner.args = ["--port=8000"]
   extraConfigMap: {}
-  extraEnv: {}
+  extraEnv:
+    OAUTH2_AUTHORIZE_URL: https://accounts.v2.opensourcebrain.org/auth/realms/osb2/protocol/openid-connect/auth
+    OAUTH2_TOKEN_URL: http://accounts.v2.opensourcebrain.org/auth/realms/osb2/protocol/openid-connect/token
+    OAUTH_CALLBACK_URL: https://nwbexplorer.v2.opensourcebrain.org/hub/oauth_callback
   extraContainers: []
   extraVolumes: []
   extraVolumeMounts: []
@@ -145,7 +148,7 @@ proxy:
           - ipBlock:
               cidr: 0.0.0.0/0
 auth:
-  type: tmp
+  type: custom
   whitelist:
     users: null
   admin:
