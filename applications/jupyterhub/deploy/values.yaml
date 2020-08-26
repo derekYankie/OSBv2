@@ -163,6 +163,7 @@ auth:
     enabled: false
     cryptoKey: null
 singleuser:
+  defaultUrl: "/lab"
   extraTolerations: []
   nodeSelector: {}
   extraNodeAffinity:
@@ -224,7 +225,6 @@ singleuser:
     limits: {}
     guarantees: {}
   cmd: jupyterhub-singleuser
-  defaultUrl: null
 scheduling:
   userScheduler:
     enabled: false

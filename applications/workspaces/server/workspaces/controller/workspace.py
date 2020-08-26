@@ -7,18 +7,20 @@ from ..config import Config
 from ..repository.model_repository import WorkspaceRepository, WorkspaceImageRepository, db
 from ..repository.models import WorkspaceImage
 
+
 def _save_image(id=None, image=None, filename_base=None):
     ext = mimetypes.guess_extension(image.mimetype)
     folder = os.path.join(Config.WORKSPACES_DIR, f"{id}")
-    Path(os.path.join(Config.STATIC_DIR,folder)).mkdir(parents=True, exist_ok=True)
+    Path(os.path.join(Config.STATIC_DIR, folder)).mkdir(parents=True, exist_ok=True)
 
     if filename_base is None:
         filename = image.filename
     else:
         filename = f"{filename_base}{ext}"
     filename = os.path.join(folder, filename)
-    image.save(os.path.join(Config.STATIC_DIR,filename))
+    image.save(os.path.join(Config.STATIC_DIR, filename))
     return filename
+
 
 def setthumbnail(id=None, thumbNail=None, body=None, **kwargs):
     workspace, found = WorkspaceRepository().get(id=id)
@@ -35,8 +37,9 @@ def setthumbnail(id=None, thumbNail=None, body=None, **kwargs):
     saved_filename = _save_image(id=id, image=thumbNail, filename_base="thumbnail")
     workspace.thumbnail = saved_filename
     db.session.add(workspace)
-    db.session.commit()   
+    db.session.commit()
     return "Saved", 200
+
 
 def addimage(id=None, image=None, body=None, **kwargs):
     workspace, found = WorkspaceRepository().get(id=id)
@@ -52,10 +55,11 @@ def addimage(id=None, image=None, body=None, **kwargs):
     # image.save(os.path.join(Config.STATIC_DIR, image.filename))
 
     saved_filename = _save_image(id=id, image=image)
-    workspace.gallery.append(WorkspaceImage(image = saved_filename))
+    workspace.gallery.append(WorkspaceImage(image=saved_filename))
     db.session.add(workspace)
-    db.session.commit()   
+    db.session.commit()
     return "Saved", 200
+
 
 def delimage(id=None, image_id=None, **kwargs):
     workspace, found = WorkspaceRepository().get(id=id)

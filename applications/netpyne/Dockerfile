@@ -6,7 +6,7 @@ ENV FOLDER=netpyne
 RUN git clone $REPO -b $BRANCH_TAG $FOLDER
 RUN rm -Rf .git
 
-COPY geppetto/GeppettoConfiguration.json $FOLDER/webapp/GeppettoConfiguration.json
+COPY overrides/GeppettoConfiguration.json $FOLDER/webapp/GeppettoConfiguration.json
 
 WORKDIR $FOLDER/webapp
 RUN npm ci
@@ -45,13 +45,13 @@ RUN jupyter serverextension enable --py --sys-prefix jupyter_geppetto
 RUN python utilities/install.py --npm-skip
 RUN jupyter labextension disable @jupyterlab/hub-extension
 
-COPY hub/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+COPY overrides/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
 # sym link workspace pvc to $FOLDER
 RUN mkdir -p ../work/workspace
 RUN ln -s ../work/workspace .
 
-# ToDo: fixme, for now remove the jupyter hub config json file because it overrides the default
+# ToDo: fixme, for now remove the jupyter config json file because it overrides the default
 # and thus removes the frame ancestor cors settings
 RUN rm -f ~/.jupyter/*.json
 
