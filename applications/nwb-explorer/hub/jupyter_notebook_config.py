@@ -15,7 +15,8 @@ c.NotebookApp.open_browser = False
 # https://github.com/jupyter/notebook/issues/3130
 c.FileContentsManager.delete_to_trash = False
 
-print('*'*80)
+c.NotebookApp.notebook_dir = "/opt/workspace"
+
 print(c.NotebookApp.tornado_settings)
 c.NotebookApp.tornado_settings = {
     'headers': {
