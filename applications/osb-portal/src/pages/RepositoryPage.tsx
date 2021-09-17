@@ -32,7 +32,7 @@ import MarkdownViewer from "../components/common/MarkdownViewer"
 import MainMenu from "../components/menu/MainMenu";
 import RepositoryActionsMenu from "../components/repository/RepositoryActionsMenu";
 
-import {
+import theme, {
   linkColor,
   bgLightest,
   fontColor,
@@ -41,12 +41,14 @@ import {
 } from "../theme";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   linkButton: {
     position: 'absolute',
     right: 0,
     backgroundColor: 'black',
     textTransform: 'none',
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(1),
     "& .MuiButton-label": {
       color: 'white',
       fontSize: '0.7rem',
@@ -59,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   repositoryInformation: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
     "& .MuiAccordionSummary-root": {
       flexDirection: 'row',
       paddingLeft: `${theme.spacing(1)}px !important`,
@@ -302,10 +304,6 @@ export const RepositoryPage = (props: any) => {
               <Grid item={true} xs={12} md={6} className="verticalFill">
                 <Box className="flex-grow-1 verticalFit" maxWidth="100%" position="relative">
                   <Box>
-
-                    <Button onClick={() => window.open(repository.uri, "_blank")} className={classes.linkButton} variant="contained" size="small" endIcon={<LinkIcon />}>
-                      See on {repository.repositoryType}
-                    </Button>
                     <Typography component="h2" variant="h2" className="primary-heading">
                       Overview
                     </Typography>
@@ -376,7 +374,15 @@ export const RepositoryPage = (props: any) => {
                       </AccordionDetails>
                     </Accordion>
                   </Box>
-                  <MarkdownViewer text={repository.description} repository={repository} />
+                  <Typography component="h2" variant="h2" className="primary-heading">
+                      Description from {repository.repositoryType}
+                    </Typography>
+                  <Box className="verticalFill">
+                    <Button onClick={() => window.open(repository.uri, "_blank")} className={classes.linkButton} variant="contained" size="small" endIcon={<LinkIcon />}>
+                        See on {repository.repositoryType}
+                    </Button>
+                    <MarkdownViewer text={repository.description} repository={repository} />
+                  </Box>
                 </Box>
               </Grid>
               <Grid item={true} xs={12} md={6} className="verticalFill">
